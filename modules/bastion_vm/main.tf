@@ -2,8 +2,8 @@
 
 resource "azurerm_public_ip" "bastion_bachelor" {
   name                = var.naming.public_ip.name
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = var.region
+  resource_group_name = var.rg_name
   allocation_method   = "Static"
   sku                 = "Standard"
 }
