@@ -15,9 +15,9 @@ variable "network_configuration" {
     vnet = object({
       address_space = string
     })
-    subnet = object({
+    subnets = map(object({
       address_space = string
-    })
+    }))
     nsg = object({
       name = string
       priority = number

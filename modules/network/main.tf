@@ -6,10 +6,11 @@ resource "azurerm_virtual_network" "bachelor" {
 }
 
 resource "azurerm_subnet" "bachelor" {
-  name                 = var.naming.subnet.name
+  for_each             = var.network_configuration.subnets
+  name                 = "${var.naming.subnet.name}-${each.key}"
   resource_group_name  = var.rg_name
   virtual_network_name = azurerm_virtual_network.bachelor
-  address_prefixes     = [var.network_configuration.subnet.address_space]
+  address_prefixes     = [each.value.address_space]
 }
 
 resource "azurerm_network_security_group" "bachelor" {

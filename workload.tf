@@ -1,6 +1,6 @@
 module "naming" {
   source  = "Azure/naming/azurerm"
-  version = "0.4.2"
+  version = "~>0.4.2"
   suffix = [ "hsh-ba-test" ]
 } 
 
@@ -26,4 +26,12 @@ module "network" {
     region = var.region
     naming = module.naming
     network_configuration = var.network_configuration
+}
+
+module "bastion" {
+    source = "./modules/bastion_vm/"
+    rg_name = azurerm_resource_group.bachelor.name
+    region = var.region
+    naming = module.naming
+    bastion_subnet_id = module.network.bastion_subnet_id
 }
