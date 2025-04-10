@@ -1,47 +1,45 @@
-resource "azurerm_virtual_wan" "bachelor" {
-  name                = var.naming.virtual_wan
-  resource_group_name = var.rg_name
-  location            = var.region
-}
-
-resource "azurerm_virtual_hub" "bachelor" {
-  name                = "virtual-hub-hsh-ba-test"
-  resource_group_name = var.rg_name
-  location            = var.region
-  virtual_wan_id      = azurerm_virtual_wan.bachelor.id
-  address_prefix      = "10.0.1.0/24"
-}
-
-resource "azurerm_vpn_gateway" "example" {
-  name                = module.naming.virtual_network_gateway
-  location            = var.region
-  resource_group_name = var.rg_name
-  virtual_hub_id      = azurerm_virtual_hub.bachelor.id
-}
-
-resource "azurerm_local_network_gateway" "bachelor" {
+resource "azurerm_local_network_gateway" "onpremise" {
   name                = var.naming.local_network_gateway
-  resource_group_name = var.rg_name
   location            = var.region
-  gateway_address     = var.local_gateway.public_ip # z. B. DynDNS oder feste IP
-  address_space       = var.local_gateway.subnets   # z. B. ["192.168.1.0/24"]
+  resource_group_name = var.rg_name
+  gateway_address     = "168.62.225.23"
+  address_space       = ["10.1.1.0/24"]
 }
 
-resource "azurerm_vpn_site_to_site_connection" "home" {
-  name                          = "${module.naming.virtual_network_gateway}-s2s"
-  location                      = var.region
-  resource_group_name           = var.rg_name
-  vpn_gateway_id                = azurerm_vpn_gateway.bachelor.id
-  local_network_gateway_id      = azurerm_local_network_gateway.bachelor.id
-  connection_protocol           = "IKEv2"
-  shared_key                    = var.shared_key
+resource "azurerm_public_ip" "bachelor" {
+  name                = "${var.naming.public_ip}-gateway"
+  location            = var.region
+  resource_group_name = var.rg_name
+  allocation_method   = "Dynamic"
+}
 
-  ipsec_policy {
-    dh_group         = "DHGroup2"
-    encryption       = "AES256"
-    integrity        = "SHA256"
-    pfs_group        = "PFS2"
-    sa_lifetime_sec  = 3600
-    sa_data_size_kb  = 102400000
+resource "azurerm_virtual_network_gateway" "bachelor" {
+  name                = var.naming.virtual_network_gateway
+  location            = var.region
+  resource_group_name = var.rg_name
+
+  type     = "Vpn"
+  vpn_type = "RouteBased"
+
+  active_active = false
+  enable_bgp    = false
+  sku           = "Basic"
+
+  ip_configuration {
+    public_ip_address_id          = azurerm_public_ip.bachelor.id
+    private_ip_address_allocation = "Dynamic"
+    subnet_id                     = var.gateway_subnet_id
   }
+}
+
+resource "azurerm_virtual_network_gateway_connection" "bachelor" {
+  name                = var.naming.virtual_network_gateway_connection
+  location            = var.region
+  resource_group_name = var.rg_name
+
+  type                       = "IPsec"
+  virtual_network_gateway_id = azurerm_virtual_network_gateway.bachelor.id
+  local_network_gateway_id   = azurerm_local_network_gateway.onpremise.id
+
+  shared_key = var.shared_key
 }

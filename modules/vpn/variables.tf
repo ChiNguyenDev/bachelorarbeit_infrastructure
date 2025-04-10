@@ -23,3 +23,7 @@ variable "vpn_gateway_configuration" {
 variable "shared_key" {
   type = string
 }
+
+variable "gateway_subnet_id" {
+  type = string
+}

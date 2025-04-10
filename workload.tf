@@ -34,6 +34,7 @@ module "vpn" {
     region = var.region
     naming = module.naming
     shared_key = var.shared_key
+    gateway_subnet_id = module.network.gateway_subnet_id
     vpn_gateway_configuration = var.vpn_gateway_configuration
 }
 

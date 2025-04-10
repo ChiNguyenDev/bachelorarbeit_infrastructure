@@ -19,12 +19,14 @@ variable "network_configuration" {
       address_space = string
     }))
     nsg = object({
-      name                   = string
-      priority               = number
-      direction              = string
-      access                 = string
-      protocol               = string
-      destination_port_range = string
+      rule = map(object({
+        name                   = string
+        priority               = optional(number, 100)
+        direction              = string
+        access                 = string
+        protocol               = optional(string, "Tcp")
+        destination_port_range = string
+      }))
     })
   })
 }

@@ -29,14 +29,21 @@ network_configuration = {
     bastion = {
       adress_space = "10.0.3.0/24"
     }
+    
   }
   nsg = {
-    name                   = "AllowSSH"
-    priority               = 100
-    direction              = "Inbound"
-    access                 = "Allow"
-    protocol               = "Tcp"
-    destination_port_range = "22"
+    ssh = {
+      name                   = "AllowSSH"
+      direction              = "Inbound"
+      access                 = "Allow"
+      destination_port_range = "22"
+    }
+    mssql = {
+      name = "AllowMSSQL"
+      direction = "Outbound"
+      access = "Allow"
+      destination_port_range = 1433
+    }
   }
 }
 
