@@ -28,6 +28,15 @@ module "network" {
     network_configuration = var.network_configuration
 }
 
+module "vpn" {
+    source = "./modules/vpn/"
+    rg_name = azurerm_resource_group.bachelor.name
+    region = var.region
+    naming = module.naming
+    shared_key = var.shared_key
+    vpn_gateway_configuration = var.vpn_gateway_configuration
+}
+
 module "bastion" {
     source = "./modules/bastion_vm/"
     rg_name = azurerm_resource_group.bachelor.name

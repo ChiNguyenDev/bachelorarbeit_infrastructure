@@ -1,7 +1,7 @@
 region = "West Europe"
 
 vm_configuration = {
-  vm_count = 20 # number of vm instances
+  vm_count = 100 # number of vm instances
   instance_properties = {
     vm_size = "Standard_DS1_v2"
     storage_image_reference = {
@@ -39,4 +39,5 @@ network_configuration = {
     destination_port_range = "22"
   }
 }
+
 

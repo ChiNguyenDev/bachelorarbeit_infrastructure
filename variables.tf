@@ -19,9 +19,17 @@ variable "region" {
 }
 
 variable "vm_configuration" {
-  type = any # defined in submodule
+  type = any 
 }
 
 variable "network_configuration" {
-  type = any # defined in submodule
+  type = any 
+}
+
+variable "vpn_gateway_configuration" {
+  type = any
+}
+
+variable "shared_key" {
+  type = string
 }

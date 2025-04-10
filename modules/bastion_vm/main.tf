@@ -1,4 +1,4 @@
-# This bastion vm acts as a Jump hosts to the clients
+# This bastion vm acts as a jump host to the clients
 
 resource "azurerm_public_ip" "bastion_bachelor" {
   name                = var.naming.public_ip.name

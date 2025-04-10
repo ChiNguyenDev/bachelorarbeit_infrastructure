@@ -19,11 +19,11 @@ variable "network_configuration" {
       address_space = string
     }))
     nsg = object({
-      name = string
-      priority = number
-      direction = string
-      access = string
-      protocol = string
+      name                   = string
+      priority               = number
+      direction              = string
+      access                 = string
+      protocol               = string
       destination_port_range = string
     })
   })
