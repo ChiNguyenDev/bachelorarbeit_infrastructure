@@ -12,6 +12,7 @@ I used this for my bachelor thesis with the title
     client_secret   = "<your_client_secret>"
     tenant_id       = "<your_tenant_id>"
     subscription_id = "<your_subscription_id>"
+    shared_key = <vpn_gateway_shared_key>
     ```
 
 2. Make sure your current CLI session is authorized to Azure.  
