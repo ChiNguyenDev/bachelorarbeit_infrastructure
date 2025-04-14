@@ -17,10 +17,3 @@ I used this for my bachelor thesis with the title
 2. Make sure your current CLI session is authorized to Azure.  
 3. Create an SSH key pair and place the `.pub` file in `modules/vm`.  
 4. Change specific configurations in `config.tfvars` if needed.  
-
-## Useful Commands  
-
-```sh
-terraform init
-terraform plan -var-file="./config.tfvars"
-terraform apply -var-file="./config.tfvars"
