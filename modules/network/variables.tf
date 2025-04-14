@@ -19,7 +19,7 @@ variable "network_configuration" {
       address_space = string
     }))
     nsg = object({
-      rule = map(object({
+      security_rule = map(object({
         name                   = string
         priority               = optional(number, 100)
         direction              = string

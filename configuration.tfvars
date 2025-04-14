@@ -1,7 +1,9 @@
+# terraform plan -var-file="./configuration.tfvars" -var-file="./secrets.tfvars"
+
 region = "West Europe"
 
 vm_configuration = {
-  vm_count = 100 # number of vm instances
+  vm_count = 2 # number of vm instances
   instance_properties = {
     vm_size = "Standard_DS1_v2"
     storage_image_reference = {
@@ -32,17 +34,19 @@ network_configuration = {
     
   }
   nsg = {
-    ssh = {
-      name                   = "AllowSSH"
-      direction              = "Inbound"
-      access                 = "Allow"
-      destination_port_range = "22"
-    }
-    mssql = {
-      name = "AllowMSSQL"
-      direction = "Outbound"
-      access = "Allow"
-      destination_port_range = 1433
+    security_rule = {
+      ssh = {
+        name                   = "AllowSSH"
+        direction              = "Inbound"
+        access                 = "Allow"
+        destination_port_range = "22"
+      }
+      mssql = {
+        name = "AllowMSSQL"
+        direction = "Outbound"
+        access = "Allow"
+        destination_port_range = 1433
+      }
     }
   }
 }

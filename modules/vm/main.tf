@@ -38,7 +38,7 @@ resource "azurerm_virtual_machine" "main" {
 
     ssh_keys {
       path     = "/home/admin${var.count_index}/.ssh/authorized_keys"
-      key_data = file("${path.module}/bachelorserver.pub")
+      key_data = file("${path.module}/hybrid-db.pub")
     }
   }
 }
