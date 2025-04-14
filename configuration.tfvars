@@ -1,4 +1,4 @@
-# terraform plan -var-file="./configuration.tfvars" -var-file="./secrets.tfvars"
+# terraform plan -var-file="./configuration.tfvars" -var-file="./secrets.tfvars
 
 region = "West Europe"
 
