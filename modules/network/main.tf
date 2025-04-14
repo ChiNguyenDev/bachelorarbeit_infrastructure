@@ -1,22 +1,20 @@
-resource "azurerm_virtual_network" "bachelor" {
-  name                = var.naming.virtual_network.name
-  address_space       = [var.network_configuration.vnet.address_space]
-  location            = var.region
-  resource_group_name = var.rg_name
+data "azurerm_virtual_network" "bachelor" {
+  name                = "vnet-hsh-ba-test"
+  resource_group_name = "rg-hsh-ba-test"
 }
 
 resource "azurerm_subnet" "bachelor" {
   for_each             = var.network_configuration.subnets
   name                 = "${var.naming.subnet.name}-${each.key}"
   resource_group_name  = var.rg_name
-  virtual_network_name = azurerm_virtual_network.bachelor.name
+  virtual_network_name = data.azurerm_virtual_network.bachelor.name
   address_prefixes     = [each.value.address_space]
 }
 
 resource "azurerm_subnet" "gateway" {
   name                 = "GatewaySubnet"
   resource_group_name  = var.rg_name
-  virtual_network_name = azurerm_virtual_network.bachelor.name
+  virtual_network_name = data.azurerm_virtual_network.bachelor.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
