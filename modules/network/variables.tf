@@ -18,15 +18,13 @@ variable "network_configuration" {
     subnets = map(object({
       address_space = string
     }))
-    nsg = object({
-      security_rule = map(object({
-        name                   = string
-        priority               = optional(number, 100)
-        direction              = string
-        access                 = string
-        protocol               = optional(string, "Tcp")
-        destination_port_range = string
-      }))
-    })
+    nsg = map(object({
+      name                   = string
+      priority               = optional(number, 100)
+      direction              = string
+      access                 = string
+      protocol               = optional(string, "Tcp")
+      destination_port_range = string
+    }))
   })
 }

@@ -16,6 +16,6 @@ resource "azurerm_bastion_host" "bachelor" {
   ip_configuration {
     name                 = "${var.naming.bastion_host.name}-ip-config"
     subnet_id            = var.bastion_subnet_id
-    public_ip_address_id = azurerm_public_ip.bastion_bachelor
+    public_ip_address_id = azurerm_public_ip.bastion_bachelor.id
   }
 }

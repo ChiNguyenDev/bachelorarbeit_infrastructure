@@ -21,9 +21,3 @@ provider "azurerm" {
   subscription_id = var.subscription_id
 }
 
-terraform {
-  backend "local" {
-    path = "./terraform.tfstate"
-  }
-}
-
