@@ -4,8 +4,9 @@ module "naming" {
   suffix = [ "hsh-ba-test" ]
 } 
 
-data "azurerm_resource_group" "bachelor" {
-  name = "rg-hsh-ba-test"
+resource "azurerm_resource_group" "bachelor" {
+  name     = module.naming.resource_group.name
+  location = var.region
 }
 
 module "vm" {
@@ -13,24 +14,25 @@ module "vm" {
     count = var.vm_configuration.vm_count
     count_index = "${count.index}"
     vm_configuration = var.vm_configuration
-    rg_name = data.azurerm_resource_group.bachelor.name
+    rg_name = azurerm_resource_group.bachelor.name
     region = var.region
     naming = module.naming
     subnet_id = module.network.vm_subnet_id
+    tools_sas_token = var.tools_sas_token
 }
 
 module "network" {
     source = "./modules/network/"
-    rg_name = data.azurerm_resource_group.bachelor.name
+    rg_name = azurerm_resource_group.bachelor.name
     region = var.region
     naming = module.naming
     network_configuration = var.network_configuration
 }
 
-module "bastion" {
-    source = "./modules/bastion_vm/"
-    rg_name = data.azurerm_resource_group.bachelor.name
+module "vpn" {
+    source = "./modules/vpn/"
+    rg_name = azurerm_resource_group.bachelor.name
     region = var.region
     naming = module.naming
-    bastion_subnet_id = module.network.bastion_subnet_id
+    gateway_subnet_id = module.network.gateway_subnet_id
 }

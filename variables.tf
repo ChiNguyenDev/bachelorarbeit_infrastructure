@@ -26,6 +26,6 @@ variable "network_configuration" {
   type = any 
 }
 
-variable "shared_key" {
+variable "tools_sas_token" {
   type = string
 }

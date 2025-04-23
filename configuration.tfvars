@@ -1,11 +1,13 @@
-# terraform plan -var-file="./configuration.tfvars" -var-file="./secrets.tfvars
+# terraform plan -var-file="./configuration.tfvars" -var-file="./secrets.tfvars"
+# terraform apply -var-file="./configuration.tfvars" -var-file="./secrets.tfvars"
+# terraform destroy -var-file="./configuration.tfvars" -var-file="./secrets.tfvars"
 
 region = "West Europe"
 
 vm_configuration = {
-  vm_count = 2 # number of vm instances
+  vm_count = 1 # number of vm instances
   instance_properties = {
-    vm_size = "Standard_DS1_v2"
+    vm_size = "Standard_B1ms"
   }
   storage_image_reference = {
     publisher = "Canonical"
@@ -28,10 +30,9 @@ network_configuration = {
     vm = {
       address_space = "10.0.2.0/24"
     }
-    bastion = {
+    gateway = {
       address_space = "10.0.3.0/24"
     }
-
   }
   nsg = {
     ssh = {
@@ -39,12 +40,6 @@ network_configuration = {
       direction              = "Inbound"
       access                 = "Allow"
       destination_port_range = "22"
-    }
-    mssql = {
-      name                   = "AllowMSSQL"
-      direction              = "Outbound"
-      access                 = "Allow"
-      destination_port_range = 1433
     }
   }
 }

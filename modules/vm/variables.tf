@@ -37,3 +37,7 @@ variable "vm_configuration" {
 variable "subnet_id" {
   type = string
 }
+
+variable "tools_sas_token" {
+  type = string
+}

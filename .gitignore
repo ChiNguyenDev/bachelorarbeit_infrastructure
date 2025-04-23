@@ -2,3 +2,7 @@ secrets.tfvars
 *.exe
 *.pub
 .terraform
+*.pem
+certs
+skripte
+.gitattributes

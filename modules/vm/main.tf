@@ -42,3 +42,22 @@ resource "azurerm_virtual_machine" "main" {
     }
   }
 }
+
+
+resource "azurerm_virtual_machine_extension" "bachelor" {
+  name                 = "install-tools"
+  virtual_machine_id   = azurerm_virtual_machine.main.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = jsonencode({
+    commandToExecute = "bash install_tools.sh"
+  })
+
+  protected_settings = jsonencode({
+    fileUris = ["https://tfbackendstorage2210.blob.core.windows.net/scripts/install_tools.sh?${var.tools_sas_token}"]
+  })
+}
+
+

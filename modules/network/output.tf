@@ -3,9 +3,6 @@ output "vm_subnet_id" {
 }
 
 output "gateway_subnet_id" {
-  value = azurerm_subnet.gateway.id
+  value = azurerm_subnet.bachelor["gateway"].id
 }
 
-output "bastion_subnet_id" {
-  value = azurerm_subnet.bachelor["bastion"].id
-}
