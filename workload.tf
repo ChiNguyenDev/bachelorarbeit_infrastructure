@@ -1,12 +1,15 @@
+# ========================================================================================
+# Dieses Terraform Skript wurde im Rahmen der Bachelorarbeit von Chi Cuong Nguyen erstellt
+# ========================================================================================
+
 module "naming" {
   source  = "Azure/naming/azurerm"
   version = "0.4.2"
   suffix = [ "hsh-ba-test" ]
 } 
 
-resource "azurerm_resource_group" "bachelor" {
-  name     = module.naming.resource_group.name
-  location = var.region
+data "azurerm_resource_group" "bachelor" {
+  name = "rg-hsh-ba-test"
 }
 
 module "vm" {
@@ -14,25 +17,19 @@ module "vm" {
     count = var.vm_configuration.vm_count
     count_index = "${count.index}"
     vm_configuration = var.vm_configuration
-    rg_name = azurerm_resource_group.bachelor.name
+    rg_name = data.azurerm_resource_group.bachelor.name
     region = var.region
     naming = module.naming
     subnet_id = module.network.vm_subnet_id
     tools_sas_token = var.tools_sas_token
+    admin_password = var.admin_password
 }
 
 module "network" {
     source = "./modules/network/"
-    rg_name = azurerm_resource_group.bachelor.name
+    rg_name = data.azurerm_resource_group.bachelor.name
     region = var.region
     naming = module.naming
     network_configuration = var.network_configuration
 }
 
-module "vpn" {
-    source = "./modules/vpn/"
-    rg_name = azurerm_resource_group.bachelor.name
-    region = var.region
-    naming = module.naming
-    gateway_subnet_id = module.network.gateway_subnet_id
-}

@@ -20,7 +20,7 @@ variable "network_configuration" {
     }))
     nsg = map(object({
       name                       = string
-      priority                   = optional(number, 100)
+      priority                   = number
       direction                  = string
       access                     = string
       protocol                   = optional(string, "Tcp")

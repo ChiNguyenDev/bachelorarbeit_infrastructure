@@ -14,6 +14,10 @@ variable "region" {
   type = string
 }
 
+variable "admin_password" {
+  type = string
+}
+
 variable "vm_configuration" {
   type = object({
     vm_count = number

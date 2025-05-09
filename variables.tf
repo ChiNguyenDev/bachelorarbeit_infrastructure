@@ -29,3 +29,7 @@ variable "network_configuration" {
 variable "tools_sas_token" {
   type = string
 }
+
+variable "admin_password" {
+  type = string
+}
