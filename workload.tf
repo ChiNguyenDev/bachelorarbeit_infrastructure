@@ -1,6 +1,8 @@
-# ========================================================================================
+# ==============================================================================================
 # Dieses Terraform Skript wurde im Rahmen der Bachelorarbeit von Chi Cuong Nguyen erstellt
-# ========================================================================================
+# Titel: "Skalierbarkeitsanalyse von hybriden Cloud-Architekturen auf Basis von Microsoft Azure"
+# der VPN Gateway wurde außerhalb von Terraform im Azure-Portal konfiguriert.
+# ==============================================================================================
 
 module "naming" {
   source  = "Azure/naming/azurerm"
