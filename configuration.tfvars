@@ -2,7 +2,7 @@
 # terraform apply -var-file="./configuration.tfvars" -var-file="./secrets.tfvars"
 # terraform destroy -var-file="./configuration.tfvars" -var-file="./secrets.tfvars"
 
-region = "West Europe"
+region = "Germany West Central"
 
 vm_configuration = {
   vm_count = 1 # number of vm instances
